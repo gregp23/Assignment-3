@@ -10,7 +10,7 @@ import java.util.HashMap;
 class Main {
 
   public static void main(String[] args)throws Exception {
-    File file = new File("gucci.txt");
+    File file = new File("gucci.txt");//The Song Gucci Gang by Lil Pump
 
     Scanner scanner = new Scanner(file);
     //Scanner that reads the lyrics of the song
