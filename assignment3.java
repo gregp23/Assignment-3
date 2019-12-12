@@ -3,27 +3,42 @@ import java.util.Stack;
 import java.util.Scanner;
 import java.util.*;
 import java.io.File;
-import java.util.StringTokenizer;
+import java.util.Comparator;
+import java.util.SortedMap; 
+import java.util.LinkedHashMap;
+import java.util.HashMap;
+class Main {
 
-class assignment3 {
   public static void main(String[] args)throws Exception {
     File file = new File("gucci.txt");
 
     Scanner scanner = new Scanner(file);
-    //Scanner that reads the lyrics of the song Gucci gang
+    //Scanner that reads the lyrics of the song
     String wholetext="";
     while(scanner.hasNextLine()){
       String readme = scanner.nextLine();
       wholetext = wholetext+" "+readme;
     }
-  //I created a StringTokenizer object to remove any delimiters
-    StringTokenizer str = new StringTokenizer(wholetext, ",// //(//)//!//");
-
-   System.out.println("This song has a total of " + str.countTokens()+ " words");
-   System.out.println("The phrase 'Gucci Gang' was repeated "+repeat(wholetext)+" times");}
-   //Created a method that counts the number of times the phrase Gucci Gang was repeated in the song
-  static int repeat(String string){  
-      String[]a = string.split("Gucci gang");
-    return a.length-1;
-  }
+    //setting a delimiter and setting the words to lowercase
+    String [] freq = wholetext.toLowerCase().split(" ");
+   System.out.println("This song has a total of " +freq.length+  " words");
+    //Created a map to to input word frequency(Word is the key while integer keeps track)
+      Map<String, Integer> tracker = new HashMap<>();
+        for (String string :freq) {
+            if (tracker.containsKey(string)) {
+                tracker.put(string, 1 + tracker.get(string));
+            } else {
+                tracker.put(string, 1);
+            }
+        }
+        //LinkedHashMap to sort the map 
+        LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<>();
+        tracker.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue())); 
+        //Iterator for the map
+          sortedMap.forEach((key, value) -> 
+          System.out.println(key +":"+ value));          
+    }  
 }
+   
+
